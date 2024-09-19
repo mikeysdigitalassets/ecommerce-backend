@@ -75,11 +75,14 @@ public class AuthService {
     }
 
     public LoginResponseDTO loginUser(String email, String password) {
-        User user = authRepository.findByEmail(email);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return new LoginResponseDTO(user.getUsername(), user.getEmail());
+        Optional<User> userOptional = Optional.ofNullable(authRepository.findByEmail(email));
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return new LoginResponseDTO(user.getUsername(), user.getEmail());
+            }
         }
-        return null;
+        return null; // Return null if user is not found or password does not match
     }
 
 }

@@ -5,6 +5,8 @@ import com.example.ecommercebackend.dto.UserDTO;
 import com.example.ecommercebackend.models.User;
 import com.example.ecommercebackend.services.AuthService;
 import com.example.ecommercebackend.repositories.AuthRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +74,27 @@ public class UserAuthController {
     public ResponseEntity<String> deleteUser(@PathVariable String username) {
         authService.deleteUser(username);
         return ResponseEntity.ok("User deleted successfully");
+    }
+
+    @GetMapping("/current-user")
+    public ResponseEntity<LoginResponseDTO> currentUser(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            LoginResponseDTO currentUser = (LoginResponseDTO) session.getAttribute("user");
+            if (currentUser != null) {
+                return ResponseEntity.ok(currentUser);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logoutUser(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Invalidate the session
+            return ResponseEntity.ok("Logged out successfully");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user is logged in");
     }
 }
