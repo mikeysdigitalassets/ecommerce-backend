@@ -5,7 +5,9 @@ import com.example.ecommercebackend.dto.UserDTO;
 import com.example.ecommercebackend.models.User;
 import com.example.ecommercebackend.services.AuthService;
 import com.example.ecommercebackend.repositories.AuthRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,13 +90,22 @@ public class UserAuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 
-    @GetMapping("/logout")
-    public ResponseEntity<String> logoutUser(HttpServletRequest request) {
+    @PostMapping("/logout")
+    public ResponseEntity<String> logoutUser(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate(); // Invalidate the session
-            return ResponseEntity.ok("Logged out successfully");
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user is logged in");
+        Cookie cookie = new Cookie("JSESSIONID", null); // Create a cookie with the same name
+        cookie.setPath("/"); // Path must match the original path of the cookie
+        cookie.setDomain("localhost"); // Optional: Set if domain was specified when creating the cookie
+        cookie.setMaxAge(0); // Set the cookie's max age to 0 to delete it
+        cookie.setHttpOnly(true); // Optional: Match the HttpOnly attribute if it was set
+        response.addCookie(cookie); // Add the cookie to the response
+
+        System.out.println("Cookie deleted");
+
+        return ResponseEntity.ok("Logged out successfully");
+
     }
 }

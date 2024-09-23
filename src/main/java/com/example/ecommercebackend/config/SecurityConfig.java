@@ -1,10 +1,13 @@
 package com.example.ecommercebackend.config;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,25 +22,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Use a method to define CORS configuration
-                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Use the CORS configuration
+                .csrf(csrf -> csrf.disable()) // Disable CSRF protection in the new way
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**", "/api/products/**").permitAll() // Allow public access to these endpoints
-                        .anyRequest().authenticated() // All other requests need authentication
-                )
-                .formLogin(form -> form
-                        .loginProcessingUrl("/api/auth/login")
-                        .defaultSuccessUrl("/api/auth/success", true) // Redirect on successful login
-                        .failureUrl("/api/auth/login?error=true") // Redirect on login failure
-                        .permitAll()
-                )
+                        .requestMatchers("/api/auth/**","/api/products").permitAll() // Allow access to auth endpoints
+                        .anyRequest().authenticated() // All other endpoints require authentication
+                );
+
+        http
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .logoutSuccessUrl("/") // Redirect to a public page after logout
+                        .permitAll()
+                        .logoutSuccessHandler(((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        }))
                 )
+
                 .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                         .maximumSessions(1) // Limit to one session per user
                         .expiredUrl("/api/auth/login") // Redirect to login on session expiration
                 )
@@ -62,8 +66,11 @@ public class SecurityConfig {
         configuration.setAllowCredentials(true); // Allow cookies/credentials
         configuration.addExposedHeader("Authorization"); // Expose the Authorization header
 
+        configuration.addExposedHeader("Access-Control-Allow-Origin");
+        configuration.addExposedHeader("Access-Control-Allow-Credentials");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration); // Apply CORS configuration to the API endpoints
+        source.registerCorsConfiguration("/**", configuration); // Apply CORS configuration to all endpoints
         return source;
     }
 }

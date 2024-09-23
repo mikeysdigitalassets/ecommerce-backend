@@ -75,14 +75,27 @@ public class AuthService {
     }
 
     public LoginResponseDTO loginUser(String email, String password) {
-        Optional<User> userOptional = Optional.ofNullable(authRepository.findByEmail(email));
+        // Fetch user from repository
+        Optional<User> userOptional = authRepository.findByEmail(email);
+
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+
+            // Check if password matches
             if (passwordEncoder.matches(password, user.getPassword())) {
                 return new LoginResponseDTO(user.getUsername(), user.getEmail());
+            } else {
+                // Optionally, log or return an error message for incorrect password
+                System.out.println("Incorrect password for user: " + email);
             }
+        } else {
+            // Optionally, log or return an error message for user not found
+            System.out.println("User not found with email: " + email);
         }
-        return null; // Return null if user is not found or password does not match
+
+        // Return null or throw an exception with a message if user is not found or password is incorrect
+        return null;
     }
+
 
 }
