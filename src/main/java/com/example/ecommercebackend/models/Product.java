@@ -76,6 +76,10 @@ public class Product {
         this.rating = rating;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Column(nullable = false)
     private double price;
 
