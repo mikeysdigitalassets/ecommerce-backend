@@ -10,7 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username; // or another unique identifier like Long id
+    private String username;
     private String password;
     private String email;
 
@@ -21,7 +21,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-// Other fields like email, address, etc.
+
 
     public String getUsername() {
         return username;
@@ -40,5 +40,5 @@ public class User {
     }
 
 
-    // Getters and setters
+
 }

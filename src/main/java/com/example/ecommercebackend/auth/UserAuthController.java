@@ -27,7 +27,7 @@ public class UserAuthController {
     private AuthService authService;
 
     @Autowired
-    private AuthRepository authRepository;  // Inject AuthRepository
+    private AuthRepository authRepository;
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserDTO userDTO) {
@@ -49,7 +49,7 @@ public class UserAuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
 
-        // If no issues, proceed with registration logic
+        /
         authService.registerUser(userDTO);
         return ResponseEntity.ok("User registered successfully");
     }
@@ -96,12 +96,12 @@ public class UserAuthController {
         if (session != null) {
             session.invalidate(); // Invalidate the session
         }
-        Cookie cookie = new Cookie("JSESSIONID", null); // Create a cookie with the same name
-        cookie.setPath("/"); // Path must match the original path of the cookie
-        cookie.setDomain("localhost"); // Optional: Set if domain was specified when creating the cookie
-        cookie.setMaxAge(0); // Set the cookie's max age to 0 to delete it
-        cookie.setHttpOnly(true); // Optional: Match the HttpOnly attribute if it was set
-        response.addCookie(cookie); // Add the cookie to the response
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setDomain("localhost");
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
 
         System.out.println("Cookie deleted");
 

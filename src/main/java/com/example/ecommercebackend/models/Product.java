@@ -91,5 +91,5 @@ public class Product {
 
     private double rating;
 
-    // Getters and Setters
+
 }

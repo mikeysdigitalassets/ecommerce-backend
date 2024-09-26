@@ -22,11 +22,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Use the CORS configuration
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection in the new way
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**","/api/products").permitAll() // Allow access to auth endpoints
-                        .anyRequest().authenticated() // All other endpoints require authentication
+                        .requestMatchers("/api/auth/**","/api/products").permitAll()
+                        .anyRequest().authenticated()
                 );
 
         http
@@ -42,11 +42,11 @@ public class SecurityConfig {
 
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                        .maximumSessions(1) // Limit to one session per user
-                        .expiredUrl("/api/auth/login") // Redirect to login on session expiration
+                        .maximumSessions(1)
+                        .expiredUrl("/api/auth/login")
                 )
                 .sessionManagement(session -> session
-                        .sessionFixation(sessionFixation -> sessionFixation.migrateSession()) // Migrating session, ensuring new session
+                        .sessionFixation(sessionFixation -> sessionFixation.migrateSession())
                 );
 
         return http.build();
@@ -54,23 +54,23 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Create a PasswordEncoder bean using BCrypt
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000"); // Allow requests from your frontend
-        configuration.addAllowedMethod("*"); // Allow all HTTP methods
-        configuration.addAllowedHeader("*"); // Allow all headers
-        configuration.setAllowCredentials(true); // Allow cookies/credentials
-        configuration.addExposedHeader("Authorization"); // Expose the Authorization header
+        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+        configuration.addExposedHeader("Authorization");
 
         configuration.addExposedHeader("Access-Control-Allow-Origin");
         configuration.addExposedHeader("Access-Control-Allow-Credentials");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply CORS configuration to all endpoints
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }

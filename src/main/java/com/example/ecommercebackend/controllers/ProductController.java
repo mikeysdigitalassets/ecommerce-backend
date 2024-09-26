@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    // Logger instance for logging information
+
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
