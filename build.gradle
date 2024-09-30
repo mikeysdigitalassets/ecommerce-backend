@@ -29,6 +29,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+
     // PostgreSQL Driver to connect to PostgreSQL database
     implementation 'org.postgresql:postgresql:42.2.5'
 
