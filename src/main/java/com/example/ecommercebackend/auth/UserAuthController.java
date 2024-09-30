@@ -49,7 +49,7 @@ public class UserAuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
 
-        /
+        
         authService.registerUser(userDTO);
         return ResponseEntity.ok("User registered successfully");
     }
