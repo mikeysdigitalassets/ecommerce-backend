@@ -8,11 +8,33 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // This field should exist
 
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
-    private String password;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getEmail() {
         return email;
@@ -22,11 +44,6 @@ public class User {
         this.email = email;
     }
 
-
-    public String getUsername() {
-        return username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -34,11 +51,4 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-
-
 }

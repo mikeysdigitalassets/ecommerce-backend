@@ -83,19 +83,21 @@ public class AuthService {
 
             // Check if password matches
             if (passwordEncoder.matches(password, user.getPassword())) {
-                return new LoginResponseDTO(user.getUsername(), user.getEmail());
+                // Return LoginResponseDTO with id, username, and email
+                return new LoginResponseDTO(user.getId(), user.getUsername(), user.getEmail());
             } else {
-                // Optionally, log or return an error message for incorrect password
+                // Log or return an error message for incorrect password
                 System.out.println("Incorrect password for user: " + email);
             }
         } else {
-            // Optionally, log or return an error message for user not found
+            // Log or return an error message for user not found
             System.out.println("User not found with email: " + email);
         }
 
         // Return null or throw an exception with a message if user is not found or password is incorrect
         return null;
     }
+
 
 
 }

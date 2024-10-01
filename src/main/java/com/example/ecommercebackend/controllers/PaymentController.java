@@ -3,7 +3,6 @@ package com.example.ecommercebackend.controllers;
 import com.example.ecommercebackend.services.StripeService;
 import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.ecommercebackend.dto.PaymentRequest;
@@ -22,19 +21,17 @@ public class PaymentController {
     @PostMapping("/create-payment-intent")
     public ResponseEntity<Map<String, String>> createPaymentIntent(@RequestBody PaymentRequest paymentRequest) {
         try {
-            // Call the service to create the PaymentIntent
             PaymentIntent paymentIntent = stripeService.createPaymentIntent(paymentRequest.getAmount());
-
-            // Return a JSON response with the client secret
             Map<String, String> response = new HashMap<>();
-            response.put("clientSecret", paymentIntent.getClientSecret());
-
+            response.put("client_secret", paymentIntent.getClientSecret()); // Use "client_secret"
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            // Log the error and return a 500 status with a generic error message
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Payment failed: " + e.getMessage()));
+            return ResponseEntity.status(500).body(Map.of("error", "Payment failed: " + e.getMessage()));
         }
     }
+
+
+
+
 
 }
