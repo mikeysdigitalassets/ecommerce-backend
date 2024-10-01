@@ -1,0 +1,40 @@
+package com.example.ecommercebackend.controllers;
+
+import com.example.ecommercebackend.services.StripeService;
+import com.stripe.model.PaymentIntent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import com.example.ecommercebackend.dto.PaymentRequest;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@RestController
+@RequestMapping("/api/payment")
+public class PaymentController {
+
+    @Autowired
+    private StripeService stripeService;
+
+    @PostMapping("/create-payment-intent")
+    public ResponseEntity<Map<String, String>> createPaymentIntent(@RequestBody PaymentRequest paymentRequest) {
+        try {
+            // Call the service to create the PaymentIntent
+            PaymentIntent paymentIntent = stripeService.createPaymentIntent(paymentRequest.getAmount());
+
+            // Return a JSON response with the client secret
+            Map<String, String> response = new HashMap<>();
+            response.put("clientSecret", paymentIntent.getClientSecret());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            // Log the error and return a 500 status with a generic error message
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Payment failed: " + e.getMessage()));
+        }
+    }
+
+}
