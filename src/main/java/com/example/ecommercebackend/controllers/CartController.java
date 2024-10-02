@@ -47,7 +47,17 @@ public class CartController {
     @DeleteMapping("/remove")
     public ResponseEntity<String> removeItemFromCart(@RequestBody CartItemRequest cartItemRequest) {
 
-        cartService.removeItemFromCart(cartItemRequest.getUserId(), cartItemRequest.getProductId(), cartItemRequest.getQuantity());
+        // Log the incoming request data for debugging
+        System.out.println("UserId: " + cartItemRequest.getUserId());
+        System.out.println("ProductId: " + cartItemRequest.getProductId());
+        System.out.println("QuantityToRemove: " + cartItemRequest.getQuantityToRemove());
+
+        cartService.removeItemFromCart(
+                cartItemRequest.getUserId(),
+                cartItemRequest.getProductId(),
+                cartItemRequest.getQuantityToRemove()
+        );
         return ResponseEntity.ok("Item removed from cart");
     }
+
 }

@@ -1,29 +1,24 @@
 package com.example.ecommercebackend.dto;
 
+import com.example.ecommercebackend.models.Product;
+
 public class CartItemRequest {
     private Long userId;
     private Long productId;
-    private int quantity; // quantity to remove
+    private int quantity;
+    private int quantityToRemove; // quantity to remove
     private double price;
     private String name;
 
-    // G & S
+    // Getters and Setters
 
 
-    public String getName() {
-        return name;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Long getUserId() {
@@ -34,19 +29,35 @@ public class CartItemRequest {
         this.userId = userId;
     }
 
-    public Long getProductId() {
+    public Long getProductId() {  // Corrected
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(Long productId) {  // Corrected
         this.productId = productId;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getQuantityToRemove() {
+        return quantityToRemove;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setQuantityToRemove(int quantityToRemove) {
+        this.quantityToRemove = quantityToRemove;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
