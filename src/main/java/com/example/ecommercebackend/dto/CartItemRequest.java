@@ -4,8 +4,28 @@ public class CartItemRequest {
     private Long userId;
     private Long productId;
     private int quantity; // quantity to remove
+    private double price;
+    private String name;
 
-    // Getters and setters
+    // G & S
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public Long getUserId() {
         return userId;
     }

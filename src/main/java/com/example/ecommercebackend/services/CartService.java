@@ -39,6 +39,8 @@ public class CartService {
         cartItem.setUser(user);
         cartItem.setProduct(product);
         cartItem.setQuantity(cartItemRequest.getQuantity());
+        cartItem.setPrice(cartItemRequest.getPrice());
+        cartItem.setName(cartItemRequest.getName());
 
         // Save the cart item to the database
         cartRepository.save(cartItem);
