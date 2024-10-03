@@ -67,7 +67,7 @@ public class CartService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
 
-        cartRepository.deleteByUser(user);
+        cartRepository.deleteByUserId(userId);
     }
 
 
