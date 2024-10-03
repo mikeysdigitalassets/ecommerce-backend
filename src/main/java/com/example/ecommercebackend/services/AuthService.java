@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 import java.util.Optional;
 
 @Service
@@ -75,26 +75,26 @@ public class AuthService {
     }
 
     public LoginResponseDTO loginUser(String email, String password) {
-        // Fetch user from repository
+
         Optional<User> userOptional = authRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            // Check if password matches
+
             if (passwordEncoder.matches(password, user.getPassword())) {
-                // Return LoginResponseDTO with id, username, and email
+
                 return new LoginResponseDTO(user.getId(), user.getUsername(), user.getEmail());
             } else {
-                // Log or return an error message for incorrect password
+
                 System.out.println("Incorrect password for user: " + email);
             }
         } else {
-            // Log or return an error message for user not found
+
             System.out.println("User not found with email: " + email);
         }
 
-        // Return null or throw an exception with a message if user is not found or password is incorrect
+
         return null;
     }
 

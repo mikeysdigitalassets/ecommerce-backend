@@ -1,6 +1,7 @@
 package com.example.ecommercebackend.controllers;
 
 import com.example.ecommercebackend.models.Product;
+import com.example.ecommercebackend.repositories.ProductRepository;
 import com.example.ecommercebackend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
@@ -21,6 +22,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping
     public List<Product> getAllProducts() {
@@ -76,4 +79,10 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/search")
+    public List<Product> searchProducts(@RequestParam String search) {
+        logger.info("Received request to search products with search: {}", search);
+        return productRepository.findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCase(search, search);
+    };
 }

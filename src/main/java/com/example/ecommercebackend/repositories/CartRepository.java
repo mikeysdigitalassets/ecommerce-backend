@@ -15,10 +15,12 @@ public interface CartRepository extends JpaRepository<CartItem, Long> {
 
     void deleteByUser(User user);
 
-    // Find the cart item by user ID and product ID
+    // finds cart item by userId and productId, using this for functionality of cart
     Optional<CartItem> findByUserIdAndProductId(Long userId, Long productId);
 
-    // Delete the cart item by user ID and product ID
+    // method for deleting individual cart item when pressing remove from cart
     void deleteByUserIdAndProductId(Long userId, Long productId);
+
+
 }
 

@@ -47,7 +47,7 @@ public class CartController {
     @DeleteMapping("/remove")
     public ResponseEntity<String> removeItemFromCart(@RequestBody CartItemRequest cartItemRequest) {
 
-        // Log the incoming request data for debugging
+        // log request data for debugging
         System.out.println("UserId: " + cartItemRequest.getUserId());
         System.out.println("ProductId: " + cartItemRequest.getProductId());
         System.out.println("QuantityToRemove: " + cartItemRequest.getQuantityToRemove());

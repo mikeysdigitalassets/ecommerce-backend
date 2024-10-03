@@ -8,7 +8,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // This field should exist
+    private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
@@ -19,7 +19,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }

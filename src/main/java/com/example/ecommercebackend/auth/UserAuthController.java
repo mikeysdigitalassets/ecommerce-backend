@@ -94,7 +94,7 @@ public class UserAuthController {
     public ResponseEntity<String> logoutUser(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate(); // Invalidate the session
+            session.invalidate();
         }
         Cookie cookie = new Cookie("JSESSIONID", null);
         cookie.setPath("/");

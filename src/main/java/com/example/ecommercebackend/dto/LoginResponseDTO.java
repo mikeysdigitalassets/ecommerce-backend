@@ -5,14 +5,14 @@ public class LoginResponseDTO {
     private String username;
     private String email;
 
-    // Constructor
+
     public LoginResponseDTO(Long id, String username, String email) {
         this.id = id;
         this.username = username;
         this.email = email;
     }
 
-    // Getters and setters
+
     public Long getId() {
         return id;
     }

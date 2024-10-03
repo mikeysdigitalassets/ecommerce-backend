@@ -1,6 +1,6 @@
 package com.example.ecommercebackend.dto;
 
-import com.example.ecommercebackend.models.Product;
+
 
 public class CartItemRequest {
     private Long userId;
@@ -10,7 +10,7 @@ public class CartItemRequest {
     private double price;
     private String name;
 
-    // Getters and Setters
+
 
 
     public int getQuantity() {

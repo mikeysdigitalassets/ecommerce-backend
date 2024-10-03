@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**","/api/products/**", "/api/payment/**", "/api/cart/**").permitAll()
+                        .requestMatchers("/api/products/search","/api/auth/**","/api/products/**", "/api/payment/**", "/api/cart/**").permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -43,7 +43,7 @@ public class SecurityConfig {
                 )
 
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                         .maximumSessions(1)
                         .expiredUrl("/api/auth/login")
                 )
@@ -66,7 +66,7 @@ public class SecurityConfig {
         configuration.addAllowedMethod("GET");
         configuration.addAllowedMethod("POST");
         configuration.addAllowedMethod("PUT");
-        configuration.addAllowedMethod("DELETE"); // Explicitly allow DELETE method
+        configuration.addAllowedMethod("DELETE");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
         configuration.addExposedHeader("Authorization");

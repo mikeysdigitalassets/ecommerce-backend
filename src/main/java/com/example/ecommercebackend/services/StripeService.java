@@ -15,13 +15,13 @@ public class StripeService {
 
     @PostConstruct
     public void init() {
-        Stripe.apiKey = stripeSecretKey;  // Initialize Stripe with the secret key
+        Stripe.apiKey = stripeSecretKey;
     }
 
     public PaymentIntent createPaymentIntent(Long amount) throws Exception {
         PaymentIntentCreateParams createParams = PaymentIntentCreateParams.builder()
                 .setAmount(amount)
-                .setCurrency("usd") // Customize the currency if needed
+                .setCurrency("usd")
                 .build();
 
         return PaymentIntent.create(createParams);

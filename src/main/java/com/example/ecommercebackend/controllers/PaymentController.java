@@ -23,7 +23,7 @@ public class PaymentController {
         try {
             PaymentIntent paymentIntent = stripeService.createPaymentIntent(paymentRequest.getAmount());
             Map<String, String> response = new HashMap<>();
-            response.put("client_secret", paymentIntent.getClientSecret()); // Use "client_secret"
+            response.put("client_secret", paymentIntent.getClientSecret());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("error", "Payment failed: " + e.getMessage()));

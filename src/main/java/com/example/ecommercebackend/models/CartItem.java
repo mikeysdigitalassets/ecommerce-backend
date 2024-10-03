@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 
 
-import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "cart_items")
@@ -28,13 +28,13 @@ public class CartItem {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @Column(name = "price", nullable = false)  // Add price field
+    @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "name", nullable = false)  // Add name field
+    @Column(name = "name", nullable = false)
     private String name;
 
-    // Getters and Setters
+
 
 
     public Long getProductId() {
@@ -73,19 +73,19 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public double getPrice() {  // Getter for price
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {  // Setter for price
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public String getName() {  // Getter for name
+    public String getName() {
         return name;
     }
 
-    public void setName(String name) {  // Setter for name
+    public void setName(String name) {
         this.name = name;
     }
 

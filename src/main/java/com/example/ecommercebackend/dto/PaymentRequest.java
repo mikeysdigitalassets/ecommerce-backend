@@ -4,7 +4,7 @@ public class PaymentRequest {
 
     private Long amount;
 
-    // Getters and Setters
+
     public Long getAmount() {
         return amount;
     }
