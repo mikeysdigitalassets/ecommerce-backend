@@ -107,5 +107,8 @@ public class UserAuthController {
 
         return ResponseEntity.ok("Logged out successfully");
 
+
     }
+
+
 }
